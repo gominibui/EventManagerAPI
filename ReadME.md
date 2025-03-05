@@ -1,4 +1,4 @@
-```
+
 # Event Management API
 
 ## Описание проекту / Project Description
