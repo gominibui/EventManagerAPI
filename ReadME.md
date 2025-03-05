@@ -140,8 +140,3 @@ docker-compose up --build
 
 MIT License
 
-## Автори / Authors
-
-- Your Name - Lead Developer
-- [Your GitHub Profile](https://github.com/yourusername)
-```
