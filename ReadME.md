@@ -1,34 +1,37 @@
-
 # Event Management API
 
-## Описание проекту / Project Description
+## Описание проекта / Project Description
 
-Це API для управління подіями, створене за допомогою Django та Django REST Framework. API дозволяє створювати, переглядати, оновлювати та видаляти події, а також реєструвати користувачів на події.
+Це API для управління подіями, створене за допомогою Django та Django REST Framework. API дозволяє користувачам створювати, переглядати, оновлювати та видаляти події, а також реєструвати користувачів на ці події. Використовується система автентифікації JWT для захисту користувацьких даних та доступу до подій.
 
-This is an Event Management API built with Django and Django REST Framework. The API allows users to create, view, update, delete events, and register users for events.
+This is an Event Management API built with Django and Django REST Framework. The API allows users to create, view, update, delete events, and register users for these events. It uses JWT authentication to secure user data and access to events.
 
 ## Основні функції / Key Features
 
 - CRUD операції для управління подіями (Create, Read, Update, Delete).
-- Реєстрація та автентифікація користувачів.
-- Документація API з використанням `drf_spectacular` та Swagger.
+- Реєстрація та автентифікація користувачів за допомогою JWT.
+- Організатор події автоматично визначається як користувач, що створив подію.
+- Документація API за допомогою `drf_spectacular` та Swagger.
+- Фільтрація подій за датою та місцем.
+- Підтримка Docker і Docker Compose для зручного запуску проекту.
 
 ## Технології / Technologies
 
 - **Django** — основний фреймворк.
 - **Django REST Framework** — для створення API.
 - **drf_spectacular** — для автоматичного генерування документації API.
-- **SQLite** — база даних (якщо використовується).
-- **Docker** — контейнеризація додатку.
-- **Docker Compose** — для керування декількома контейнерами (наприклад, сервером та базою даних).
+- **SQLite** — база даних (можна замінити на PostgreSQL, MySQL тощо).
+- **Docker** — для контейнеризації додатку.
+- **Docker Compose** — для керування декількома контейнерами (сервер та база даних).
+- **JWT Authentication** — для автентифікації користувачів.
 
 ## Установка / Installation
 
 ### 1. Клонуйте репозиторій / Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/EventManage.git
-cd EventManage
+git clone https://github.com/gominibui/EventManagerAPI.git
+cd EventManagerAPI
 ```
 
 ### 2. Створіть та активуйте віртуальне середовище / Create and activate a virtual environment
@@ -70,7 +73,7 @@ python manage.py runserver
 1. Створіть образ Docker / Build the Docker image:
 
 ```bash
-docker build -t eventmanage .
+docker build -t eventmanagerapi .
 ```
 
 2. Запустіть Docker контейнер / Run the Docker container:
@@ -79,7 +82,7 @@ docker build -t eventmanage .
 docker-compose up --build
 ```
 
-Це створить і запустить сервер разом із базою даних у контейнерах Docker. 
+Це створить і запустить сервер разом із базою даних у контейнерах Docker.
 
 ### 8. Перевірка API / Checking the API
 
@@ -99,16 +102,21 @@ docker-compose up --build
   "title": "Conference 2025",
   "description": "Annual conference about tech innovations.",
   "date": "2025-05-01T10:00:00Z",
-  "location": "Kyiv, Ukraine",
-  "organizer": 1  # ID організатора (користувача)
+  "location": "Kyiv, Ukraine"
 }
 ```
+
+**Примітка:** Організатор події автоматично ставиться на основі користувача, який створив подію.
 
 ### 2. Отримання списку подій / Get event list
 
 **GET** `/api/events/`
 
-### 3. Оновлення події / Update an event
+### 3. Отримання події за ID / Get event by ID
+
+**GET** `/api/events/{id}/`
+
+### 4. Оновлення події / Update an event
 
 **PATCH** `/api/events/{id}/`
 
@@ -120,23 +128,24 @@ docker-compose up --build
 }
 ```
 
-### 4. Видалення події / Delete an event
+### 5. Видалення події / Delete an event
 
 **DELETE** `/api/events/{id}/`
 
-### 5. Реєстрація користувача на подію / Register a user for an event
+Цей запит додасть користувача до події як учасника.
 
-**POST** `/api/events/{id}/register/`
+### 7. Фільтрація подій / Filter events
 
-Тіло запиту:
+**GET** `/api/events/?date_after=2025-01-01&location=Kyiv`
 
-```json
-{
-  "user": 1  # ID користувача, який реєструється
-}
-```
+Цей запит поверне всі події після 1 січня 2025 року в Києві. Ви можете використовувати різні параметри для фільтрації за датою, місцем та іншими критеріями.
 
 ## Ліцензія / License
 
 MIT License
 
+## Автори / Authors
+
+- Gominibui - Lead Developer
+- [GitHub Profile](https://github.com/gominibui)
+```
