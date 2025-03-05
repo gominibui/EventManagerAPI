@@ -1,8 +1,12 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
+from drf_spectacular.utils import extend_schema_view, extend_schema
+from rest_framework.filters import SearchFilter
+from django_filters.rest_framework import DjangoFilterBackend
+
+from .filters import EventFilter
 from .models import Event
 from .serializers import EventSerializer
-from drf_spectacular.utils import extend_schema_view, extend_schema
 
 @extend_schema_view(
     list=extend_schema(description="Get a list of all events."),
@@ -20,3 +24,6 @@ class EventViewSet(viewsets.ModelViewSet):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
     permission_classes = [IsAuthenticated]
+    filter_backends = [DjangoFilterBackend, SearchFilter]
+    filterset_class = EventFilter
+    search_fields = ['title', 'location', 'date']
