@@ -1,10 +1,14 @@
+from email.policy import default
 from pathlib import Path
+from decouple import config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = "django-insecure-dy4k$im35w2lrcxzhqls52vv#d1g&##-pg412d^b75$)r73_y#"
+SECRET_KEY = config("DJANGO_SECRET_KEY")
 
-DEBUG = True
+DEBUG = config("DJANGO_DEBUG",
+               cast=bool,
+               default=False)
 
 ALLOWED_HOSTS = []
 
