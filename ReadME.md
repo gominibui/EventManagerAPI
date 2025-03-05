@@ -132,9 +132,7 @@ docker-compose up --build
 
 **DELETE** `/api/events/{id}/`
 
-Цей запит додасть користувача до події як учасника.
-
-### 7. Фільтрація подій / Filter events
+### 6. Фільтрація подій / Filter events
 
 **GET** `/api/events/?date_after=2025-01-01&location=Kyiv`
 
